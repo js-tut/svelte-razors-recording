@@ -1,7 +1,5 @@
 <script>
-  // cart button
   import CartButton from "../Cart/CartButton.svelte";
-  // global store
   import { link } from "svelte-routing";
 </script>
 
