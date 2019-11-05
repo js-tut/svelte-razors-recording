@@ -8,10 +8,10 @@ const globalStore = writable({
 
 const store = {
   subscribe: globalStore.subscribe,
-  toggleItem : (item,value)=>{
-globalStore.update(storeValues =>{
- return {...storeValues,[item]:value}
-})
+  toggleItem: (item, value) => {
+    globalStore.update(storeValues => {
+      return { ...storeValues, [item]: value };
+    });
   }
 };
 
