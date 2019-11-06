@@ -1,6 +1,15 @@
 import { writable, derived } from "svelte/store";
 // import localCart from "../localCart";
 // cart
+// localStorage
+function getStorageCart() {
+  return localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [];
+}
+export function setStorageCart(cartValues) {
+  localStorage.setItem("cart", JSON.stringify(cartValues));
+}
 const cart = writable(getStorageCart());
 // cart total
 export const cartTotal = derived(cart, $cart => {
@@ -37,11 +46,11 @@ export const increaseAmount = id => {
     return toggleAmount(id, storeValue, "inc");
   });
 };
-export const decreaseAmount = id => {
+export const decreaseAmount = (id, amount) => {
   cart.update(storeValue => {
-    let item = storeValue.find(item => item.id === id);
+    // let item = storeValue.find(item => item.id === id);
     let cart;
-    if (item.amount === 1) {
+    if (amount === 1) {
       cart = remove(id, storeValue);
     } else {
       cart = toggleAmount(id, storeValue, "dec");
@@ -49,28 +58,18 @@ export const decreaseAmount = id => {
     return [...cart];
   });
 };
-export const addToCart = (id, product) => {
+export const addToCart = product => {
   cart.update(storeValue => {
+    const { id, image, title, price } = product;
     let item = storeValue.find(item => item.id === id);
-
     let cart;
     if (item) {
       cart = toggleAmount(id, storeValue, "inc");
     } else {
-      const { id, image, title, price } = product;
       let newItem = { id, image, title, price, amount: 1 };
       cart = [...storeValue, newItem];
     }
-    return [...cart];
+    return cart;
   });
 };
-// localStorage
-function getStorageCart() {
-  return localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [];
-}
-export function setStorageCart(cartValues) {
-  localStorage.setItem("cart", JSON.stringify(cartValues));
-}
 export default cart;

@@ -2,7 +2,6 @@
   export let id;
   export let location;
   import { addToCart } from "../stores/cart";
-
   import products from "../stores/defaultProducts";
   import Loading from "../components/Loading.svelte";
   import { link } from "svelte-routing";
@@ -32,7 +31,7 @@
         <button
           class="btn btn-primary btn-block"
           on:click={() => {
-            addToCart(parseInt(id), product);
+            addToCart(product);
             globalStore.toggleItem('cart', true);
           }}>
           add to cart
