@@ -3,6 +3,7 @@
   import { link } from "svelte-routing";
   import globalStore from "../../stores/globalStore";
   import { fly, fade } from "svelte/transition";
+  import LoginLink from "../LoginLink.svelte";
 </script>
 
 <div class="sidebar-container" transition:fly={{ x: -1000 }}>
@@ -36,6 +37,9 @@
           </a>
         </li>
       {/each}
+      <li>
+        <LoginLink />
+      </li>
     </ul>
   </div>
 </div>
