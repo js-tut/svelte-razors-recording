@@ -1,8 +1,7 @@
 import axios from "axios";
 import url from "./URL";
-let user = JSON.parse(localStorage.getItem("user"));
 
-async function submitOrder({ name, total, items, tokenId }) {
+async function submitOrder({ name, total, items, stripeTokenId, userToken }) {
   const response = await axios
     .post(
       `${url}/orders`,
@@ -10,16 +9,15 @@ async function submitOrder({ name, total, items, tokenId }) {
         name,
         total,
         items,
-        tokenId
+        stripeTokenId
       },
       {
         headers: {
-          Authorization: `Bearer ${user.jwt}`
+          Authorization: `Bearer ${userToken}`
         }
       }
     )
     .catch(error => console.log(error));
-
   return response;
 }
 

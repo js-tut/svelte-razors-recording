@@ -5,7 +5,6 @@
   import cart, { cartTotal } from "../stores/cart";
   import submitOrder from "../strapi/submitOrder";
   import globalStore from "../stores/globalStore";
-
   let name = "";
   // stripe vars
   let cardElement;
@@ -42,16 +41,15 @@
     const { token } = response;
     if (token) {
       const { id } = token;
-      // token.id
-      // submit the order
+      console.log($cartTotal);
+
       let order = await submitOrder({
         name,
         total: $cartTotal,
         items: $cart,
-        tokenId: id
+        stripeTokenId: id,
+        userToken: $user.jwt
       });
-      console.log(order);
-
       if (order) {
         globalStore.toggleItem("alert", true, "your order is complete!");
         cart.set([]);
@@ -62,12 +60,14 @@
         globalStore.toggleItem(
           "alert",
           true,
-          "there was an error with your order. please try again!",
+          "there was an error with your order. please try again",
           true
         );
       }
+
+      // token.id
+      // submit the order
     } else {
-      console.log(response);
     }
   }
 </script>
